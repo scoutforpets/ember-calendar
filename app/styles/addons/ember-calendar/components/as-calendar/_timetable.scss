@@ -44,9 +44,26 @@
       color: color(link);
     }
 
+    @include bem-modifier('clickable') {
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+        color: #008fd9;
+      }
+    }
+
     &:not(:last-child) {
       border-right: 1px solid color(border);
     }
+  }
+
+  @include bem-element('slots') {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
   }
 
   @include bem-element('slot-label') {
@@ -54,8 +71,8 @@
     font-weight: $font-weight-bold;
     text-align: center;
 
-    &:first-child {
-      color: transparent;
+    &:not(:first-child) {
+      border-top: 1px solid #ececec;
     }
   }
 
@@ -76,7 +93,7 @@
   @include bem-element('days') {
     height: 100%;
     left: 0;
-    position: absolute;
+    // position: absolute;
     top: 0;
     width: 100%;
   }
@@ -90,8 +107,65 @@
       background-color: rgba(242, 248, 254, .4);
     }
 
+    @include bem-modifier('out-of-period') {
+      opacity: 0.5;
+    }
+
     &:last-child {
       border-right: 0;
+    }
+  }
+
+  @include bem-element('hour-marker') {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 0;
+    height: 0;
+    border-top: 2px solid #ff7f6e;
+    overflow: hidden;
+  }
+
+  @include bem-modifier('day') {
+    .as-calendar-timetable__row--highlighted > .as-calendar-timetable__columns {
+      width: 100%;
+    }
+
+    @include bem-element('column-item' 'day') {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  @include bem-modifier('week') {
+    .as-calendar-timetable__row--highlighted > .as-calendar-timetable__columns {
+      left: 10%;
+    }
+  }
+
+  @include bem-modifier('month') {
+    @include bem-element('columns') {
+      width: 100%;
+    }
+    @include bem-element('day') {
+      height: 100px;
+      border: 1px solid #ececec;
+    }
+    @include bem-element('day-name') {
+      margin: 5px;
+      display: block;
+      color: #888888;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+        color: #008fd9;
+      }
+    }
+
+    .as-calendar-occurrence--timetable {
+      position: initial;
+      margin-top: 3px;
     }
   }
 }
