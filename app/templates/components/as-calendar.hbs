@@ -2,12 +2,14 @@
   {{as-calendar/header
     title=title
     model=model
+    dateFormatOptions=dateFormatOptions
     onNavigate=(action "onNavigate")
     onTypeChange=(action "changeType")}}
 {{/if}}
 
 {{#as-calendar/timetable
   model=model
+  dateFormatOptions=dateFormatOptions
   timeSlotHeight=timeSlotHeight
   onNavigateToDay=(action "navigateToDay")
   onSelectTime=(action "addOccurrence") as |day timetable|}}

@@ -5,6 +5,16 @@ export default Ember.Component.extend({
   classNameBindings: [':as-calendar'],
   tagName: 'section',
 
+  dateFormatDefaults: {
+    dayHeader: 'MMMM DD, YYYY',
+    dayContent: 'dddd',
+    weekHeaderStart: 'ddd D MMM',
+    weekHeaderEnd: 'ddd D MMM, YYYY',
+    weekContent: 'ddd D',
+    monthHeader: 'MMMM YYYY',
+    monthContent: 'ddd'
+  },
+  dateFormatOptions: null,
   dayEndingTime: '22:00',
   dayStartingTime: '8:00',
   defaultOccurrenceDuration: '1:00',
@@ -22,6 +32,9 @@ export default Ember.Component.extend({
   type: 'week',
 
   _initializeModel: Ember.on('init', function() {
+    // merge dateFormatDefaults defaults with anything that's passed in
+    this.set('dateFormatOptions', Object.assign(this.get('dateFormatDefaults'), this.get('dateFormatOptions')));
+
     this.set('model', ComponentCalendar.create({ component: this }));
   }),
 
