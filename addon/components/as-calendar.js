@@ -1,4 +1,3 @@
-import jstz from 'jstz';
 import Ember from 'ember';
 import ComponentCalendar from 'ember-calendar/models/component-calendar';
 
@@ -11,17 +10,14 @@ export default Ember.Component.extend({
   defaultOccurrenceDuration: '1:00',
   defaultOccurrenceTitle: 'New event',
   defaultOccurrenceType: '',
-  defaultTimeZoneQuery: '',
   isEditing: true,
   model: null,
   occurrences: null,
   showHeader: true,
-  showTimeZoneSearch: true,
   startingDate: null,
   timeSlotDuration: '00:30',
   timeSlotHeight: 20,
   monthTimeSlotHeight: 20,
-  timeZone: jstz.determine().name(),
   title: null,
   type: 'week',
 
@@ -30,10 +26,6 @@ export default Ember.Component.extend({
   }),
 
   actions: {
-    changeTimeZone: function(timeZone) {
-      this.set('timeZone', timeZone);
-    },
-
     addOccurrence: function (time) {
       if (this.get('model.isMonthView')) { return false; }
 

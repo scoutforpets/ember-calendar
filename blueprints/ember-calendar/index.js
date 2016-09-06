@@ -12,8 +12,6 @@ module.exports = {
     }).then(function() {
       return self.addPackagesToProject([
         { name: 'ember-cli-sass', target: '5.3.1' },
-        { name: 'ember-rl-dropdown', target: '0.7.0' },
-        { name: 'liquid-fire', target: '0.21.3' }
       ]);
     }).then(function() {
       return self.addBowerPackagesToProject([
