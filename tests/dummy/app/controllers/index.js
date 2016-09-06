@@ -47,6 +47,11 @@ export default Ember.Controller.extend({
       console.log('Edit', occurrence);
     },
 
+    dayClicked: function(occurrence) {
+      console.log('day clicked');
+      console.log(occurrence);
+    },
+
     onStartTimeSelected(time) {
       this.set('selectedStartingTime', time);
     },

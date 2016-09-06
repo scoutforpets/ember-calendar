@@ -36,13 +36,16 @@ export default Ember.Component.extend(InboundActionsMixin, {
     },
 
     addOccurrence: function (time) {
-      if (this.get('model.isMonthView')) { return false; }
-
+      
       var occurrence = this.get('model').createOccurrence({
         startsAt: time.toDate()
       });
 
       this.attrs['onAddOccurrence'](occurrence.get('content'));
+
+      if (this.get('model.isMonthView') && this.attrs.onDayClick) {
+        this.attrs.onDayClick(occurrence);
+      }
     },
 
     onNavigate: function(index) {
