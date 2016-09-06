@@ -66,13 +66,17 @@
     width: 100%;
   }
 
+  @include bem-element('slots-column') {
+    flex-grow: 1;
+  }
+
   @include bem-element('slot-label') {
     color: color(text, small);
-    font-weight: $font-weight-bold;
-    text-align: center;
+    text-align: right;
+    padding-right: 7px !important;
 
-    &:not(:first-child) {
-      border-top: 1px solid #ececec;
+    @include bem-modifier('is-hidden') {
+      opacity: 0;
     }
   }
 
@@ -80,20 +84,46 @@
     border: 1px solid color(border);
     border-bottom: 0;
     border-right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     &:first-child {
       border-top: 0;
     }
 
     &:nth-child(even) {
-      border-top-color: color(border, light);
+      border-top: 1px dotted color(border);
     }
+
+    @include bem-modifier('is-disabled') {
+      background: #f2f2f2;
+    }
+
+    &:hover {
+      background: #53ca53;
+      cursor: pointer;
+      color: #fff;
+
+      & .as-calendar-timetable__slot-item-time {
+        display: block;
+      }
+    }
+  }
+
+  @include bem-element('slot-item-time') {
+    display: none;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  @include bem-element('slot-item-check') {
+    @include icon(check);
   }
 
   @include bem-element('days') {
     height: 100%;
     left: 0;
-    // position: absolute;
     top: 0;
     width: 100%;
   }
@@ -116,14 +146,46 @@
     }
   }
 
-  @include bem-element('hour-marker') {
+  @include bem-element('day-hour-marker') {
     position: absolute;
     left: 0;
     width: 100%;
     top: 0;
+    z-index: 1;
+  }
+
+  @include bem-element('now-time') {
+    position: absolute;
+    color: #ff7f6e;
+    margin-top: -19px;
+    width: 10%;
+    text-align: right;
+    padding-right: 7px;
+  }
+
+  @include bem-element('today-marker') {
+    border: 4px solid #ff7f6e;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    margin-top: -4px;
+    margin-left: calc(10% - 5px);
+
+    @include bem-modifier('day') {
+      @for $i from 1 through 6 {
+        &_#{$i} {
+          left: $i * (90% / 7);
+        }
+      }
+    }
+  }
+
+  @include bem-element('now-line') {
     height: 0;
-    border-top: 2px solid #ff7f6e;
-    overflow: hidden;
+    border-top: 1px solid #ff7f6e;
+    width: 90%;
+    left: 10%;
+    position: absolute;
   }
 
   @include bem-modifier('day') {

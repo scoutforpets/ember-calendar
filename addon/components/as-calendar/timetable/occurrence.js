@@ -11,6 +11,7 @@ export default OccurrenceComponent.extend({
   isDraggable: true,
   isResizable: true,
   isRemovable: true,
+  isEditable: true,
   dayWidth: Ember.computed.oneWay('timetable.dayWidth'),
   referenceElement: Ember.computed.oneWay('timetable.referenceElement'),
 
@@ -59,6 +60,15 @@ export default OccurrenceComponent.extend({
         },
       });
     }
+
+    interactable.on('tap', (event) => {
+      if (event.double) { return; }
+      Ember.run(this, this._tap, event);
+    });
+
+    interactable.on('doubletap', (event) => {
+      Ember.run(this, this._doubleTap, event);
+    });
   }),
 
   _teardownInteractable: Ember.on('willDestroyElement', function() {
@@ -95,15 +105,17 @@ export default OccurrenceComponent.extend({
   _dragStart: function() {
     var $this = this.$();
     var $referenceElement = Ember.$(this.get('referenceElement'));
+    const preview = this.get('model').copy();
 
+    preview.set('isPreview', true);
     this.set('isInteracting', true);
-    this.set('_calendar.occurrencePreview', this.get('model').copy());
+    this.set('_calendar.occurrencePreview', preview);
     this.set('_dragVerticalOffset', 0);
     this.set('_dragTopDistance', $referenceElement.offset().top - $this.offset().top);
 
     this.set('_dragBottomDistance',
              ($referenceElement.offset().top + $referenceElement.height()) -
-             ($this.offset().top + $this.height()));
+      ($this.offset().top + $this.height()));
   },
 
   _dragMove: function(event) {
@@ -166,6 +178,16 @@ export default OccurrenceComponent.extend({
     Ember.$(document.documentElement).css('cursor', '');
   },
 
+  _tap: function(event) {
+    this.attrs.onClick(this.get('content'));
+    event.preventDefault();
+  },
+
+  _doubleTap: function(event) {
+    this.attrs.onDoubleClick(this.get('content'));
+    event.preventDefault();
+  },
+
   _validateAndSavePreview: function(changes) {
     if (this._validatePreviewChanges(changes)) {
       this.attrs.onUpdate(this.get('_preview.content'), changes);
@@ -189,6 +211,11 @@ export default OccurrenceComponent.extend({
   actions: {
     remove: function() {
       this.attrs.onRemove(this.get('content'));
+      this.set('isInteracting', false);
+    },
+    edit: function() {
+      this.attrs.onEdit(this.get('content'));
+      this.set('isInteracting', false);
     }
   }
 });

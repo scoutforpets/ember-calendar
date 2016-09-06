@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import range from 'ember-calendar/utils/range';
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
       this.set('occurrences', Ember.A());
     }
 
-    this.set('timeOptions', _.range(24));
+    this.set('timeOptions', range(24));
   }),
 
   actions: {
@@ -35,12 +35,21 @@ export default Ember.Controller.extend({
       }));
     },
 
+    calendarClickOccurrence(occurrence) {
+      window.alert('I was clicked!');
+      console.log(`I start at ${occurrence.get('startsAt')}`);
+    },
+
     calendarUpdateOccurrence: function(occurrence, properties) {
       occurrence.setProperties(properties);
     },
 
     calendarRemoveOccurrence: function(occurrence) {
       this.get('occurrences').removeObject(occurrence);
+    },
+
+    calendarEditOccurrence: function(occurrence) {
+      console.log('Edit', occurrence);
     },
 
     onStartTimeSelected(time) {

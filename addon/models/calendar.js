@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import range from '../utils/range';
 import Ember from 'ember';
 import moment from 'moment';
 import TimeSlot from './time-slot';
@@ -26,6 +26,7 @@ export default Ember.Object.extend({
   occurrencePreview: null,
   type: 'week',
   dayNames: [],
+  showAllHours: true,
 
   indexType: Ember.computed('type', function () {
     return indexTypesMap[this.get('type')];
@@ -58,12 +59,14 @@ export default Ember.Object.extend({
     'timeZone',
     'dayStartingTime',
     'dayEndingTime',
-    'timeSlotDuration', function () {
+    'timeSlotDuration',
+    'showAllHours', function () {
       return TimeSlot.buildDay({
         timeZone: this.get('timeZone'),
         startingTime: this.get('dayStartingTime'),
         endingTime: this.get('dayEndingTime'),
-        duration: this.get('timeSlotDuration')
+        duration: this.get('timeSlotDuration'),
+        showAllHours: this.get('showAllHours')
       });
     }),
 
@@ -116,7 +119,8 @@ export default Ember.Object.extend({
       endsAt: moment(options.startsAt)
         .add(this.get('defaultOccurrenceDuration')).toDate(),
 
-      title: this.get('defaultOccurrenceTitle')
+      title: this.get('defaultOccurrenceTitle'),
+      type: this.get('defaultOccurrenceType')
     }, options);
 
     return OccurrenceProxy.create({
@@ -165,7 +169,7 @@ export default Ember.Object.extend({
 
   generateDayNames: function () {
     const date = moment().day(1);
-    this.set('dayNames', _.range(0, 7).map(function () {
+    this.set('dayNames', range(0, 7).map(function () {
       const name = date.format("ddd");
       date.add(1, 'days');
       return name;

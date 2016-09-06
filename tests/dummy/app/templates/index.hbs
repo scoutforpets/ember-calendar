@@ -51,9 +51,12 @@
 {{as-calendar
   title="Ember Calendar"
   occurrences=occurrences
+  defaultOccurrenceType="type"
   dayStartingTime=dayStartingTime
   dayEndingTime=dayEndingTime
   timeSlotDuration="00:30"
+  onClickOccurrence=(action "calendarClickOccurrence")
   onAddOccurrence=(action "calendarAddOccurrence")
   onUpdateOccurrence=(action "calendarUpdateOccurrence")
+  onEditOccurrence=(action "calendarEditOccurrence")
   onRemoveOccurrence=(action "calendarRemoveOccurrence")}}

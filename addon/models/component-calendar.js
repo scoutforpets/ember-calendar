@@ -11,6 +11,7 @@ export default Calendar.extend({
   dayStartingTime: computedDuration('component.dayStartingTime'),
   dayEndingTime: computedDuration('component.dayEndingTime'),
   timeSlotDuration: computedDuration('component.timeSlotDuration'),
+  type: Ember.computed.oneWay('component.type'),
 
   defaultOccurrenceTitle: Ember.computed.oneWay(
     'component.defaultOccurrenceTitle'
@@ -18,6 +19,10 @@ export default Calendar.extend({
 
   defaultOccurrenceDuration: computedDuration(
     'component.defaultOccurrenceDuration'
+  ),
+
+  defaultOccurrenceType: computedDuration(
+    'component.defaultOccurrenceType'
   ),
 
   occurrences: Ember.computed('component.occurrences.[]', function() {
