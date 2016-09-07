@@ -2,6 +2,8 @@ import range from 'ember-calendar/utils/range';
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  timeSlotLabelFormat: 'h:mma',
+  nowTimeLabelFormat: 'h:mm',
   selections: null,
   occurrences: null,
   showResults: false,

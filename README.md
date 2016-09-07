@@ -146,6 +146,12 @@ In addition, you can customize the timezone handling using these options:
 * `defaultTimeZoneQuery`
 * `showTimeZoneSearch`
 
+## Time Formatting
+You can customize the format of the time slot labels as well as the now time indicator by passing a moment format string to the following properties:
+
+* `timeSlotLabelFormat`
+* `nowTimeLabelFormat`
+
 ## Styles
 
 We do not add any vendor CSS to your app by default, but you can include it if you want by doing:
