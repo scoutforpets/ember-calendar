@@ -1,5 +1,6 @@
 import range from 'ember-calendar/utils/range';
 import Ember from 'ember';
+import moment from 'moment';
 
 export default Ember.Controller.extend({
   dateFormatOptions: {
@@ -7,7 +8,11 @@ export default Ember.Controller.extend({
     dayContent: 'dddd DD'
   },
   selections: null,
-  occurrences: null,
+  occurrences: Ember.A([
+    { title: 'test', startsAt: moment(), endsAt: moment().add(30, 'minutes') },
+    { title: 'test', startsAt: moment(), endsAt: moment().add(30, 'minutes') },
+    { title: 'test2', startsAt: moment().subtract(30, 'minutes'), endsAt: moment() },
+  ]),
   showResults: false,
   timeOptions: [],
   selectedStartingTime: 8,

@@ -44,26 +44,33 @@
         <a class="as-calendar-timetable__day-showmore" href {{action 'navigateToDay' day.value bubbles=false}}>+{{day.showMoreCount}} more</a>
       {{/if}}
     {{else}}
-      {{#each day.occurrences as |occurrence|}}
+      {{!-- {{#each day.occurrences as |occurrence|}} --}}
+      {{#each-in (group-by 'title' day.occurrences) as |startsAt occurrences|}}
         <li>
-          {{#if hasBlock}}
-            {{yield occurrence timetable this}}
-          {{else}}
-            {{as-calendar/timetable/occurrence
-              model=occurrence
-              timeSlotHeight=timeSlotHeight
-              timetable=timetable
-              timeSlotDuration=timeSlotDuration
-              isMonthView=false
-              isDraggable=true
-              isResizable=true
-              isEditable=true
-              onUpdate=(action this.attrs.onUpdateOccurrence)
-              onEdit=(action this.attrs.onEditOccurrence)
-              onRemove=(action this.attrs.onRemoveOccurrence)}}
-          {{/if}}
+          <ul>
+            {{#if hasBlock}}
+              {{yield occurrence timetable this}}
+            {{else}}
+              {{#each occurrences as |occurrence|}}
+                <li>
+                  {{as-calendar/timetable/occurrence
+                    model=occurrence
+                    timeSlotHeight=timeSlotHeight
+                    timetable=timetable
+                    timeSlotDuration=timeSlotDuration
+                    isMonthView=false
+                    isDraggable=true
+                    isResizable=true
+                    isEditable=true
+                    onUpdate=(action this.attrs.onUpdateOccurrence)
+                    onEdit=(action this.attrs.onEditOccurrence)
+                    onRemove=(action this.attrs.onRemoveOccurrence)}}
+                </li>
+              {{/each}}
+            {{/if}}
+          </ul>
         </li>
-      {{/each}}
+      {{/each-in}}
     {{/if}}
 
 
