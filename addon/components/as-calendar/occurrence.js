@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import computedDuration from 'ember-calendar/macros/computed-duration';
+import moment from 'moment';
 
 export default Ember.Component.extend({
   attributeBindings: ['_style:style'],
@@ -22,7 +23,12 @@ export default Ember.Component.extend({
 
   _duration: Ember.computed.oneWay('model.duration'),
   _startingTime: Ember.computed.oneWay('model.startingTime'),
+  _endingTime: Ember.computed.oneWay('model.endingTime'),
   _dayStartingTime: Ember.computed.oneWay('day.startingTime'),
+
+  _timeSpan: Ember.computed('_startingTime', '_endingTime', function() {
+    return this.get('_endingTime').diff(this.get('_startingTime'), 'days') + 1;
+  }),
 
   _occupiedTimeSlots: Ember.computed(
     'isMonthView',
@@ -47,8 +53,11 @@ export default Ember.Component.extend({
   }),
 
   _style: Ember.computed('_height', '_top', function() {
-    return Ember.String.htmlSafe(`top: ${this.get('_top')}px;
-            height: ${this.get('_height')}px;`);
+    return Ember.String.htmlSafe(
+      `top: ${this.get('_top')}px;
+       height: ${this.get('_timeSpan') === 1 ? this.get('_height') : this.get('timeSlotHeight')}px;
+       width: ${this.get('timetable.dayWidth') * this.get('_timeSpan')}px`
+     );
   }),
 
   _stopPropagation: Ember.on('click', function(event) {
