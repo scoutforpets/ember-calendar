@@ -37,7 +37,7 @@
     {{#if model.hasTimeSlots}}
       <div class="as-calendar-timetable__first-column">
         <ul class="as-calendar-timetable__slot-labels" style={{timeSlotLabelListStyle}}>
-          <li class="as-calendar-timetable__slot-label {{if timeSlot.isHidden 'as-calendar-timetable__slot-label--is-hidden'}}" style={{timeSlotLabelStyle}}>All-Day</li>
+          <li class="as-calendar-timetable__slot-label" style={{timeSlotLabelStyle}}>All-Day</li>
           {{#each labeledTimeSlots as |timeSlot|}}
             <li class="as-calendar-timetable__slot-label {{if timeSlot.isHidden 'as-calendar-timetable__slot-label--is-hidden'}}" style={{timeSlotLabelStyle}}>
               {{timeSlot.label}}
